@@ -59,7 +59,6 @@ public class VelocityUtil {
 			writer.flush();
 			writer.close();
 			out.close();
-			System.out.println("test11");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
