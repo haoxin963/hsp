@@ -1,0 +1,70 @@
+@charset "utf-8";
+/* CSS Document */
+/*公用*/
+body,td,th,textarea,option{font:12px/18px Tahoma,Arial;color:#333}
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,input,textarea,iframe,p,th,td{padding:0;margin:0;border:0} 
+td{padding:0 2px;}
+img{border:0} 
+address,caption,cite,code,dfn,em,strong,th,var{font-weight:100;font-style:normal}
+fieldset td{padding:0}
+caption,th{text-align:left} 
+h1,h2,h3,h4,h5,h6{font-weight:100;font-size:100%} 
+q:before,q:after{content:''}
+abbr,acronym{border:0} 
+ul,ol,dl,dt,dd,li{list-style:none}
+textarea{border:1px solid #CCC;font-size:12px;padding:4px;overflow:auto}
+select{vertical-align:middle;+border:1px solid #ccc;+background:#FFF}
+select[disabled]{border:1px solid #ccc;background:#FFF}
+a{color:#39C;text-decoration:underline}
+a:hover{color:#000;text-decoration:none} 
+a:active{color:#F60} 
+a.disable,a.disable:hover{color:#CCC;cursor:default}
+.Cle,.clear{display:block;clear:both;visibility:hidden;height:0}
+.CurPoin{cursor:pointer}
+.DisIn{display:inline-block}
+.DisNo{display:none}
+.FL{float:left}
+.FR{float:right}
+.PaTop{padding-top:52px}
+.PosA{position:absolute}
+.PosR{position:relative}
+.CRed{color:#f00}
+.MToolBar{margin-top:5px;+margin-top:10px}
+.Scrollbar{width:100%;}
+.TableBor {border:1px solod #e7e7e7;}
+.TableBor td {border-top:1px solid #e7e7e7;line-height:25px;padding:0 3px!important}
+
+
+#loginbody{background:#fff url(images/background1.jpg) no-repeat center top;font-family: Verdana, Arial, Helvetica, sans-serif;font-size:12px;overflow:hidden; zoom:1; height:745px;}
+#loginwrap{width:467px; margin:0 auto auto !important;background: url(images/pic01-1-pzw.png) no-repeat 0 0; overflow:hidden; zoom:1; height:341px}
+
+
+.loginlogo{height:100px; padding:20px 0 0 127px; background:url(images/_22.gif) no-repeat 50px 18px;}
+
+.logo {width:255px;height:100px; padding-left:10px; overflow:hidden}
+
+#loginmain {float:left;padding:40px 0 0 40px;width:391px; font-size:12px;color:#485a6f;}
+#loginmain form { line-height:normal; margin-top:0;}
+#loginmain table td { line-height:30px; padding:5px;}
+
+.usname { display:inline-block; width:223px;background:url(images/userName.jpg) no-repeat; height:30px; line-height:30px; font-size:12px; vertical-align:middle; padding:1px 5px 1px 25px;}
+.usname input { width:213px; height:28px; line-height:28px;padding-left:10px; border:none; background:transparent;}
+
+.paword { display:inline-block; width:223px;background:url(images/password.jpg) no-repeat; height:30px;line-height:30px; font-size:12px; vertical-align:middle; padding:1px 5px 1px 25px;}
+.paword input { width:213px; height:28px; line-height:28px;padding-left:10px; border:none; background:transparent;}
+
+span.yanzm { display:inline-block;  width:93px; height:28px; padding:1px 5px; background:url(images/pzw8888.jpg) no-repeat;}
+span.yanzm input { width:93px; height:28px; line-height:28px;padding:0; border:none; background:transparent;}
+
+.submit { width:106px; height:34px; display:block; padding-top:8px; background:url(images/xubmit.gif) no-repeat 0 8px;}
+
+.chbox{ font-size:12px;color:#383737;}
+ 
+.loginBtn,.loginBtn b{zoom:1; display:inline-block; height:34px;background: url(images/loginBtn.png) no-repeat top right; font-weight:normal;padding:0 15px 0 0; color:#FFF; line-height:38px; overflow:hidden;}
+.loginBtn{background-position:top left; cursor:pointer; padding:0 0 0 30px}
+
+
+#loginfooter{text-align:center;color:#FFFFFF;height:25px;line-height:25px;background:#b02225;position:fixed;_position:absolute; left:0 ;bottom:0;width:100%;z-index:1000}
+.loginBtnpzw1{width:118px; height:37px; line-height:37px;background:url(images/loginpzw.jpg) no-repeat 0 0; float:left; margin-right:10px; font-family:"微软雅黑"; font-size:16px; color:#fff; text-align:center;}
+.loginBtnpzw2{width:118px; height:37px;line-height:37px;background:url(images/loginpzw2.jpg) no-repeat 0 0;float:left;font-family:"微软雅黑"; font-size:16px; color:#474747; text-align:center;}
+.zhihui_top{ width:467px; height:68px; margin:0 auto; background:url(images/zhuihui_toppzw.png) no-repeat center center; margin-top:140px;}

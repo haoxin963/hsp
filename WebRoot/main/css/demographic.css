@@ -1,0 +1,60 @@
+@charset "utf-8";
+/* CSS Document */
+
+*{margin:0;padding:0;}
+body{ color:#666666; font-family:"宋体"; font-size:12px;}
+img{border:none;}
+ul{list-style:none;}
+a{text-decoration:none;outline:none; color:#484848;}
+.fl{ float:left;}
+.fr{ float:right;}
+.cb{clear:both;}
+.mt8{ margin-top:8px;}
+.mt12{ margin-top:12px;}
+.mt20{ margin-top:20px;}
+em{ font-style:normal; color:#F00; }
+
+.demographic{ width:98%; margin-top:10px;}
+.demographic_top{width:98%; height:300px; }
+.demographic_bottom{width:98%;}
+
+/*demographic_top*/
+.demographic_top_l,.demographic_top_r{height:300px; width:49.5%;}
+.demographic_bg01{ background:url(../images/rk01.jpg) no-repeat;height:300px; width:4px;}
+.demographic_bg02{ background:url(../images/rk02.jpg) repeat-x;height:300px; width:97%; }
+.demographic_bg02_ltop,.demographic_bg02_rtop{ border-bottom:1px dotted #b5b5b5; height:37px; margin:0 2%; }
+.demographic_bg02_ltop_title,.demographic_bg02_rtop_title{ height:37px; line-height:40px; color:#5b5c5e; font-size:14px; font-weight:bold;}
+.demographic_bg02_lcenter,.demographic_bg02_rcenter{ display:block; text-align:center;}
+.demographic_bg02_ltop_title{ background:url(../images/rk07.png) no-repeat left center; padding-left:7%;}
+.demographic_bg02_rtop_title{ background:url(../images/rk09.png) no-repeat left center;padding-left:8%; }
+.demographic_bg02_lcenter{padding-top:10px; height:250px; }
+.demographic_bg02_rcenter{ padding-top:30px; height:230px;}
+
+.demographic_bg03{ background:url(../images/rk03.jpg) no-repeat;height:300px; width:6px;}
+
+/*demographic_bottom*/
+.demographic_bottom_l,.demographic_bottom_r{height:315px; width:49.5%;}
+.demographic_bg04{ background:url(../images/rk04.jpg) no-repeat;height:315px; width:4px;}
+.demographic_bg05{ background:url(../images/rk05.jpg) repeat-x;height:315px; width:97%; }
+.demographic_bg05_ltop,.demographic_bg05_rtop{ border-bottom:1px dotted #b5b5b5; height:34px; margin:0 2%; }
+.demographic_bg05_ltop_title,.demographic_bg05_rtop_title{  height:34px; line-height:38px; color:#5b5c5e; font-size:14px; font-weight:bold;}
+.demographic_bg05_lcenter,.demographic_bg05_rcenter{ height:248px;}
+.demographic_bg05_ltop_title{ background:url(../images/rk11.png) no-repeat left 12px;padding-left:4.5%;}
+.demographic_bg05_rtop_title{  background:url(../images/rk11.png) no-repeat left 12px;padding-left:4.5%; }
+.demographic_bg05_lc,.demographic_bg05_rc{ padding:0 4%; width:92%; }
+.demographic_bg05_lc_l,.demographic_bg05_rc_l{ display:block; width:}
+.demographic_bg05_lc_r,.demographic_bg05_rc_r{ width:330px;}
+.demographic_bg05_lc_r p,.demographic_bg05_rc_r p{ line-height:20px;text-align:justify;/*firefox*/text-justify:inter-ideograph;/*IE*/}
+.demographic_bg05_lcb,.demographic_bg05_rcb{margin:20px 4% 0; width:92%; border-top:1px solid #e0e0e0; border-left:1px solid #e0e0e0;background:#fff; /*overflow:scroll;*/}
+.demographic_bg05_lcb td,.demographic_bg05_rcb td{ border-right:1px solid #e0e0e0; border-bottom:1px solid #e0e0e0; height:32px; line-height:32px; padding-left:15%;padding-left:15%; }
+.demographic_bg05_lcb .register{ background:url(../images/rk13.png) no-repeat 20% center; height:32px; line-height:32px;}
+.demographic_bg05_lcb .check{ background:url(../images/rk14.png) no-repeat 20% center; height:32px; line-height:32px;}
+.demographic_bg05_lcb .nregister{ background:url(../images/rk15.png) no-repeat 20% center; height:32px; line-height:32px;}
+.demographic_bg05_rcb .lcalwomen{ background:url(../images/rk17.png) no-repeat 20% center; height:32px; line-height:32px;}
+.demographic_bg05_rcb .flowomen{ background:url(../images/rk18.png) no-repeat 20% center; height:32px; line-height:32px;}
+.demographic_bg05_rcb .disabled{ background:url(../images/rk19.png) no-repeat 20% center; height:32px; line-height:32px;}
+.demographic_bg05_rcb .older{ background:url(../images/rk20.png) no-repeat 20% center; height:32px; line-height:32px;}
+.demographic_bg05_rcb .child{ background:url(../images/rk21.png) no-repeat 20% center; height:32px; line-height:32px;}
+.demographic_bg05_rcb .ginseng{ background:url(../images/rk22.png) no-repeat 20% center; height:32px; line-height:32px;}
+
+.demographic_bg06{ background:url(../images/rk06.jpg) no-repeat;height:315px; width:6px;}

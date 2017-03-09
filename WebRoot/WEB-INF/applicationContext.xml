@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:cache="http://www.springframework.org/schema/cache" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd   
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd   
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd   
+       http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+       http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd"
+	default-autowire="byName" default-lazy-init="true">
+
+	<bean id="exceptionResolver"
+		class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property name="exceptionMappings">
+			<props>
+				<prop key="java.lang.Exception">error_500</prop>
+				<prop key="java.lang.Throwable">error_500</prop>
+			</props>
+		</property>
+		<property name="statusCodes">
+			<props>
+				<prop key="errors/error">500</prop>
+				<prop key="errors/404">404</prop>
+			</props>
+		</property>
+		<property name="warnLogCategory" value="warn"></property>
+		<property name="defaultErrorView" value="error_500"></property>
+		<property name="defaultStatusCode" value="500"></property>
+	</bean>
+
+	<bean id="jdbcTransactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dynamicDataSource" />
+	</bean>
+
+	<tx:advice transaction-manager="jdbcTransactionManager" id="txAdvice">
+		<tx:attributes>
+			<tx:method name="*" propagation="REQUIRED"></tx:method>
+			<tx:method name="find*" propagation="SUPPORTS" read-only="true" />
+			<tx:method name="get*" propagation="SUPPORTS" read-only="true" />
+			<tx:method name="query*" propagation="SUPPORTS" read-only="true" />
+			<tx:method name="list*" propagation="SUPPORTS" read-only="true" />
+			<tx:method name="count*" propagation="SUPPORTS" read-only="true" />
+		</tx:attributes>
+	</tx:advice>
+
+	<aop:config>
+		<aop:pointcut id="myPointTrans"
+			expression="execution(* net.hsp.service..*ServiceImpl.*(..))" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="myPointTrans" />
+	</aop:config>
+
+
+	<bean class="net.hsp.web.util.SpringCtx" lazy-init="false"></bean>
+
+	<bean id="baseDAO" class="net.hsp.dao.jdbc.BaseDAO">
+		<property name="dataSource" ref="dynamicDataSource"></property>
+	</bean>
+
+	<context:component-scan base-package="net.hsp.service"
+		scoped-proxy="targetClass" name-generator="net.hsp.web.util.BeanNameGenerator">
+		<context:include-filter type="regex"
+			expression="net.hsp.service..*ServiceImpl*" />
+	</context:component-scan>
+
+
+	<bean class="net.hsp.common.LogAOPUitl" id="MyAdvice"></bean>
+
+	<aop:config>
+		<aop:pointcut id="mypointcut"
+			expression="execution(* net.hsp.service..*ServiceImpl.*(..))" />
+		<aop:aspect id="t" ref="MyAdvice">
+			<aop:before pointcut-ref="mypointcut" method="before" />
+			<aop:after pointcut-ref="mypointcut" method="after" />
+		</aop:aspect>
+	</aop:config>
+
+	<import resource="classpath:com/hsp/web/dsContext.xml" />
+</beans> 
+    	 
+

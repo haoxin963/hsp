@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="hsp">
+        <wb-resource deploy-path="/" source-path="/WebRoot" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src_platform"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src_spring"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src_base"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src_config"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src_platform_ext"/>
+        <property name="context-root" value="hsp"/>
+        <property name="java-output-path" value="/hsp/WebRoot/WEB-INF/classes"/>
+    </wb-module>
+</project-modules>

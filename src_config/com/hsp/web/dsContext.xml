@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd   
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd   
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd   
+       http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<bean id="dynamicDataSource" class="net.hsp.dao.DynamicDataSource" >  
+        <property name="targetDataSources">  
+            <map key-type="java.lang.String">  
+                <entry value-ref="ds_uisp" key="uisp"></entry> 
+                <entry value-ref="ds_template" key="template"></entry>
+				<entry value-ref="ds_dev0" key="dev0"></entry>
+            </map>
+        </property> 
+        <property name="dsTypeMap">
+	        	<map key-type="java.lang.String">  
+	                <entry key="uisp" value="mysql"></entry> 
+	                <entry key="template" value="mysql"></entry>
+					<entry key="dev0" value="mysql"></entry>
+	            </map> 
+        	</property>
+    </bean>
+    
+   
+     <bean id="ds_dev0"
+			class="net.hsp.dao.ProxoolExtDataSource">
+			<property name="driver">
+				<value>com.mysql.jdbc.Driver</value>
+			</property>
+			<property name="driverUrl">
+				<value>jdbc:mysql://192.168.0.103:3306/uisp3_lw_dev0</value>
+			</property>
+			<property name="user" value="fuisp" />
+			<property name="password" value="fuisp" />
+			<property name="alias" value="proxool.dev0" />
+			<property name="maximumActiveTime" value="300000" />
+			<property name="prototypeCount" value="0" />
+			<property name="maximumConnectionCount" value="5" />
+			<property name="minimumConnectionCount" value="2" />
+			<property name="simultaneousBuildThrottle" value="50" />
+			<property name="houseKeepingTestSql"
+				value="select CURRENT_DATE" />
+	</bean>
+
+	
+	   <!-- 
+	<bean id="ds_dev0"
+			class="net.hsp.dao.ProxoolExtDataSource">
+			<property name="driver">
+				<value>oracle.jdbc.driver.OracleDriver</value>
+			</property>
+			<property name="driverUrl">
+				<value>jdbc:oracle:thin:@172.16.0.41:1521:hsp</value>
+			</property>
+			<property name="user" value="hsp" />
+			<property name="password" value="111111" />
+			<property name="alias" value="proxool.dev0" />
+			<property name="maximumActiveTime" value="300000" />
+			<property name="prototypeCount" value="0" />
+			<property name="maximumConnectionCount" value="55" />
+			<property name="minimumConnectionCount" value="2" />
+			<property name="simultaneousBuildThrottle" value="50" /> 
+			<property name="houseKeepingTestSql"
+				value="select CURRENT_DATE" /> 
+	</bean> 
+		-->
+	
+	<bean id="ds_uisp" class="com.atomikos.jdbc.AtomikosDataSourceBean"
+		init-method="init" destroy-method="close">
+		<description>mysql xa datasource</description>
+		<property name="uniqueResourceName">
+			<value>ds_uisp</value>
+		</property>
+		<property name="xaDataSourceClassName" value="com.mysql.jdbc.jdbc2.optional.MysqlXADataSource" />
+		<property name="xaProperties">
+			<props>
+				<prop key="user">fuisp</prop>
+				<prop key="password">fuisp</prop>
+				<prop key="URL">jdbc:mysql://192.168.0.103:3306/uisp3_uisp</prop>
+			</props>
+		</property> 
+		<property name="poolSize" value="3"/> 
+		<property name="minPoolSize" value="3"></property>
+		<property name="maxPoolSize" value="5"></property>
+	</bean>
+ 
+	<bean id="ds_template"	class="net.hsp.dao.ProxoolExtDataSource">
+		<property name="driver">
+		<value>com.mysql.jdbc.Driver</value>
+		</property>
+		<property name="driverUrl">
+		<value>jdbc:mysql://192.168.0.103:3306/app_uisp3_datatemplate</value>
+		</property>
+		<property name="user" value="fuisp" />
+		<property name="password" value="fuisp" />
+		<property name="alias" value="proxool.template" />
+		<property name="maximumActiveTime" value="300000" />
+		<property name="prototypeCount" value="0" />
+		<property name="maximumConnectionCount" value="1" />
+		<property name="minimumConnectionCount" value="1" />
+		<property name="simultaneousBuildThrottle" value="50" />
+		<property name="houseKeepingTestSql"	value="select CURRENT_DATE" />
+	</bean>
+	 
+</beans>
+

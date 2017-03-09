@@ -1,0 +1,287 @@
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8" 	trimDirectiveWhitespaces="true" %>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="f"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head> 
+		<jsp:include page="/com/inc/incMeta.jsp">
+			<jsp:param name="com" value="core"></jsp:param>
+		</jsp:include>  
+		<title>${f.documentTitle}</title>
+		<jsp:include page="/com/inc/incCssJs.jsp">
+			<jsp:param name="com" value="core"></jsp:param>
+		</jsp:include>
+		#if(${f.autocompletes.size()} > 0 ) 
+			<script src="${path}/com/autocomplete/jquery.autocomplete.min.js"></script>
+			<link rel="stylesheet" type="text/css" href="${path}/com/autocomplete/jquery.autocomplete.css"> 
+		#end
+		#if(${f.uploads.size()} > 0 ) 
+		<jsp:include page="/com/inc/incFileUpload.jsp"></jsp:include>
+		#end
+	</head>
+	
+ 
+	#macro(validate $required,$maxLength,$validators,$dataType)
+		#set ($i="")
+		#if ($required)
+			#set($i=$i+" required='true'")
+		#end
+ 
+		#if($validators != "")
+			#set($i=$i+$validators+"='true' ") 
+		#end
+		
+		#if($dataType == "java.lang.Integer")
+			#set($i=$i+" onkeyup='checkInteger(this)'") 
+		#end
+
+		#if($dataType == "java.lang.Long")
+			#set($i=$i+" onkeyup='checkLong(this)'") 
+		#end
+
+		#if($dataType == "java.lang.Double")
+			#set($i=$i+" onkeyup='checkDouble(this)'") 
+		#end
+		
+		#if($dataType == "java.math.BigDecimal")
+			#set($i=$i+" onkeyup='checkBigDecimal(this)'") 
+		#end
+		
+		#set($i=$i+" maxlength='"+$maxLength+"'")
+		$i
+	#end 
+	 
+	 #macro(dft $defaultValue,$sysValue) 
+		#set ($i="")
+		#if ($defaultValue!="")
+			#set($i="value="+${mark}+$defaultValue+${mark}) 
+		#end
+ 
+		#if($sysValue != "")
+			#set($i="value="+${mark}+$sysValue+${mark}) 
+		#end
+		$i
+	#end 
+	
+<body class="bodyLayout">  
+<div class="toolbarDiv"> 
+					<jsp:include page="/com/inc/toolbar.jsp"></jsp:include>
+		</div> 
+		<f:form class="inputForm" action="${path}/custom/formview/save.json?formId=${f.formId}" id="$f.formId" modelAttribute="command" method="POST" >
+		<table cellspacing="1" cellpadding="1" border="0" class="inputFormTable" width="100%">   <!--bgcolor="#aecaf0"-->
+			#set ($j=0) 
+			#set ($pcount=$f.formProperties.size)
+				<tr>
+			#foreach( ${p} in $f.formProperties)    
+				#if(${p.pk}) 
+						#set ($pcount=$pcount - 1)
+						<input type="hidden" name="${p.propertyName}" value="${ command.${p.propertyName} }" #validate(${p.required},${p.maxlength},${p.validators},${p.inputType})  />
+				#else
+						#if(${p.display})
+							#set ($j=$j + 1)
+							<td class="lableTd">
+							#if(${p.required}) <span class='required'>*</span> #end  ${p.label}  ${separator}
+							</td>
+							<td class="valueTd">
+								#if(${p.refEntity} eq '') 
+									#if(${p.inputType} eq 'text')
+										<input type="text" name="${p.propertyName}" value="${ command.${p.propertyName} }"   #validate(${p.required},${p.maxlength},${p.validators},${p.inputType}) />
+									#elseif(${p.inputType} eq 'password')
+										<input type="password" name="${p.propertyName}" value="${ command.${p.propertyName} }" #validate(${p.required},${p.maxlength},${p.validators},${p.inputType}) />
+									#elseif(${p.inputType} eq 'hidden')
+										<input type="hidden" name="${p.propertyName}" value="${ command.${p.propertyName} }"   #validate(${p.required},${p.maxlength},${p.validators},${p.inputType}) />
+									#elseif(${p.inputType} eq 'textarea')
+										<textarea name="${p.propertyName}")>${ command.${p.propertyName} }</textarea> 
+									#elseif(${p.inputType} eq 'checkbox')
+										#if($p.refDic!="")   
+											<c:forEach items="${ dics[CurrentSystemInstance]['${p.refDic}'] }" var="v">
+												<input type="checkbox" name="${p.propertyName}" value="${v}" <c:if test="${ fn:contains(command.${p.propertyName},v) }">checked</c:if>/>${v}&nbsp;
+											</c:forEach> 	
+										#else
+											<c:forEach items="${ command.${p.propertyName}Data}" var="v">
+												<input type="checkbox" name="${p.propertyName}" value="${v}" <c:if test="${ fn:contains(command.${p.propertyName},v) }">checked</c:if>/>${v}&nbsp;
+											</c:forEach> 
+										#end
+											
+									#elseif(${p.inputType} eq 'editor') 
+										<input type="hidden" name="${p.propertyName}" value="${ command.${p.propertyName} }" id="${p.propertyName}"   #validate(${p.required},${p.maxlength},${p.validators},${p.inputType}) /> 
+										<jsp:include page="/com/inc/incEditor.jsp"></jsp:include>
+									#elseif(${p.inputType} eq 'radio')  
+										#if($p.refDic!="")  
+											 <c:forEach items="${ dics[CurrentSystemInstance]['${p.refDic}'] }" var="v">
+												<input type="radio" name="${p.propertyName}" value="${v}" <c:if test="${ command.${p.propertyName} ==v }">checked</c:if>/>${v}&nbsp;
+											</c:forEach> 
+										#else
+											<c:forEach items="${ command.${p.propertyName}Data}" var="v">
+												<input type="radio" name="${p.propertyName}" value="${v}" <c:if test="${ command.${p.propertyName} ==v }">checked</c:if>/>${v}&nbsp;
+											</c:forEach> 
+										#end
+												 
+									#elseif(${p.inputType} eq 'select') 
+										#if($p.refDic!="")  
+											<select name="${p.propertyName}">
+											<c:forEach items="${ dics[CurrentSystemInstance]['${p.refDic}'] }" var="v">
+												<option  value="${v}" <c:if test="${ command.${p.propertyName} ==v }">selected</c:if> />${v}</option>
+											</c:forEach> 
+											</select>
+										#else
+											<select name="${p.propertyName}">
+											<c:forEach items="${ command.${p.propertyName}Data}" var="v">
+												<option  value="${v}" <c:if test="${ command.${p.propertyName} ==v }">selected</c:if> />${v}</option>
+											</c:forEach> 
+											</select>
+										#end
+										
+									#elseif($p.refDic!="")  
+										<f:select name="${p.propertyName}" value="${ command.${p.propertyName} }" items="${ dics[CurrentSystemInstance]['${p.refDic}'] }" /> 
+									#elseif(${p.inputType} eq 'textDate') 
+										<input type="text" name="${p.propertyName}" value="${ command.${p.propertyName} }"  readonly="true"  onclick="WdatePicker()" cssClass="Wdate" #validate(${p.required},${p.maxlength},${p.validators},${p.inputType})  />
+									#elseif(${p.inputType} eq 'fileupload') 
+										<c:if test="${ not empty command.${p.propertyName}}">
+											<c:set var="uploadPath" value="${ command.${p.propertyName}}"> </c:set>
+										</c:if>
+										<c:if test="${ empty command.${p.propertyName}}">
+											<c:set var="uploadPath" value="<%=java.util.UUID.randomUUID()%>"></c:set>
+											<c:set var="uploadPath" value="/${s.projectName}/${s.moduleName}/${uploadPath}"></c:set>
+										</c:if>
+										<jsp:include page="/com/swfupload/swfUpload.jsp"> 
+											<jsp:param name="filePath" value="${uploadPath}" />
+											<jsp:param name="isDB" value="true"/>
+											<jsp:param name="mode" value="auto"/> 
+											<jsp:param name="rename" value="true"/>
+											<jsp:param name="btnText" value="选择"/> 
+											<jsp:param name="seqId" value="seq${p.propertyName}"/>
+										 </jsp:include> 
+										<input type="hidden" name="${p.propertyName}" value="${ command.${p.propertyName} }" value="${uploadPath}"   #validate(${p.required},${p.maxlength},${p.validators},${p.inputType})  />
+									#elseif($p.refFormId!='')
+    									<input type="hidden" name="${p.propertyName}" value="${ command.${p.propertyName} }" id="${p.propertyName}"   #validate(${p.required},${p.maxlength},${p.validators},${p.inputType}) /> 
+    									<jsp:include page="/com/inc/selector.jsp">
+    										<jsp:param name="texts" value="请选择"></jsp:param>
+    										<jsp:param name="btnType" value="button"></jsp:param>
+    										<jsp:param name="mode" value="radio"></jsp:param>
+    										<jsp:param name="required" value="${p.required}"></jsp:param>
+    										<jsp:param name="initValue" value="${ command.${p.propertyName} eq 0 ? '' : command.${p.propertyName} }"></jsp:param>
+    										<jsp:param name="inputId" value="${p.propertyName}"></jsp:param>
+    										<jsp:param name="labelProperty" value="${p.labelProperty}"></jsp:param>
+    										<jsp:param name="pkProperty" value="${p.pkProperty}"></jsp:param>
+    										<jsp:param name="url" value="${path}//custom/formview/list.json?formId=${p.refFormId}"></jsp:param>
+    									</jsp:include> 
+									#end
+								#else 
+									<input type="hidden" name="${p.propertyName}" value="${ command.${p.propertyName} }" id="${p.propertyName}"   #validate(${p.required},${p.maxlength},${p.validators},${p.inputType}) /> 
+									<jsp:include page="/com/inc/selector.jsp">
+										<jsp:param name="texts" value="请选择"></jsp:param>
+										<jsp:param name="btnType" value="button"></jsp:param>
+										<jsp:param name="mode" value="radio"></jsp:param>
+										<jsp:param name="required" value="${p.required}"></jsp:param>
+										<jsp:param name="initValue" value="${ command.${p.propertyName} eq 0 ? '' : command.${p.propertyName} }"></jsp:param>
+										<jsp:param name="inputId" value="${p.propertyName}"></jsp:param>
+										<jsp:param name="labelProperty" value="${p.refEntityId}"></jsp:param>
+										<jsp:param name="pkProperty" value="${p.refEntityId}"></jsp:param>
+										<jsp:param name="url" value="${path}/${s.projectName}/${s.moduleName}/${p.refEntity}/doList.do"></jsp:param>
+									</jsp:include> 
+								#end
+						</td>
+						#if($j % 2 == 0)
+							</tr><tr>
+						#else
+							#if(${j} == ${pcount} )
+								<td colspan="2"></td></tr>
+							#end 
+								#end
+						#else
+							#set ($pcount=$pcount - 1)
+						#end    
+				#end 
+			#end
+		</table> 
+		</f:form> 
+		</div>  
+	</body>
+
+	<script> 
+			var serverURL = "${path}/${s.projectName}/${s.moduleName}/$f.entityObjName";
+			var formId = "${f.formId}";
+			#if(${f.autocompletes.size()} > 0 ) 
+				var autocompletes = [];
+				#foreach( ${p} in $f.autocompletes)
+					autocompletes.push("${p}");
+				#end
+				for(var i=0;i<autocompletes.length;i++){
+					$("#"+autocompletes[i]).focus().autocomplete("${path}/system/pubmodule/doAutocomplete.do", { 
+						dataType: "json",
+						max:"50",
+						width: 152,
+						extraParams:{"filter[whereField]":autocompletes[i],"filter[entity]":"${f.entityFullName}","filter[field]":autocompletes[i]+" as k,"+autocompletes[i]+" as v"},
+						parse: function(data) {
+							return jQuery.map(data, function(row) { 
+								return {
+									data: row,
+									value: row.k,
+									result: row.v
+								}
+							});
+						},
+						formatItem: function(item) { 
+							return item.k;
+						}
+						
+					}).result(function(event, item) {
+						return item.v;
+					});
+				}
+			#end
+ 
+			function doSave(obj){ 
+				if($("#"+formId).valid()){
+					$("#"+formId).form({
+						onSubmit: function(){
+							 
+						},
+						success:function(result){
+								 result = jQuery.parseJSON(result);
+								 if(result.${f.pkProperty} && result.${f.pkProperty}!=""){
+								 parent.jQuery.messager.alert(constants.alertTitle,constants.success);
+								 top.ymPrompt.close();
+								 if(obj){
+										obj.datagrid('reload');
+									 }
+							}else{
+								parent.jQuery.messager.alert(constants.alertTitle,result.errorInfo);
+							}
+						}
+					}); 
+					$('#'+formId).submit(); 
+				}
+			} 
+
+			$().ready(function() { 
+				#if(${f.remoteValidators.size()} > 0 ) 
+					var validateFun = { 
+							rules: {
+								#set ($i=0)
+								#foreach( ${p} in $f.remoteValidators)
+									${p}: { 
+										remote: {
+										    url: "${path}/system/pubmodule/doSyncValidate.do",
+										    type: "post",
+										    dataType: "json",
+										    data: {
+											"filter[field]":"${p}",
+											"filter[entity]":"${f.entityFullName}",
+											"filter[q]":function() {return document.getElementById("${p}").value;}
+										    }
+										}
+									  }#if(${i} <(${f.remoteValidators.size()} - 1)) , #end
+									  #set ($i=$i+1)
+								#end
+							}
+					}; 
+					var v = $("#"+formId).validate(validateFun); 
+				#else
+					var v = $("#"+formId).validate(); 
+				#end
+			});
+		</script>
+</html>

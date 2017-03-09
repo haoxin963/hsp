@@ -1,0 +1,31 @@
+ <ehcache updateCheck="false" dynamicConfig="false">
+
+	<diskStore path="java.io.tmpdir/ehcache" />
+
+<cacheManagerPeerProviderFactory
+    class="net.sf.ehcache.distribution.jgroups.JGroupsCacheManagerPeerProviderFactory"
+    properties="connect=UDP(mcast_addr=231.12.21.132;mcast_port=45566;):PING:
+    MERGE2:FD_SOCK:VERIFY_SUSPECT:pbcast.NAKACK:UNICAST:pbcast.STABLE:FRAG:pbcast.GMS"
+    propertySeparator="::"/>
+
+	<defaultCache maxElementsInMemory="1000" eternal="false" timeToIdleSeconds="120" timeToLiveSeconds="120" overflowToDisk="true" />
+ 
+	<cache name="service3600" maxElementsInMemory="200000" eternal="false" timeToIdleSeconds="3600" overflowToDisk="true"></cache>
+
+	<cache name="session1800" maxElementsInMemory="200000" eternal="false" timeToIdleSeconds="1800" overflowToDisk="true"></cache>
+
+	<cache name="session1800_online" maxElementsInMemory="200000" eternal="false" timeToIdleSeconds="1800" overflowToDisk="true"></cache>
+	
+	<cache name="session1800_sync_online" maxElementsInMemory="200000" eternal="false" timeToIdleSeconds="1800" >
+		<searchable/> 
+	</cache>
+
+	<cache name="session1800_sync" maxElementsInMemory="200000" eternal="false" timeToIdleSeconds="1800" overflowToDisk="true">
+		<cacheEventListenerFactory class="net.sf.ehcache.distribution.jgroups.JGroupsCacheReplicatorFactory" properties="replicateAsynchronously=true, replicatePuts=true, 
+            replicateUpdates=true, replicateUpdatesViaCopy=false, 
+            replicateRemovals=true" />
+	</cache>
+
+
+</ehcache>
+ 
