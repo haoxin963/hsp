@@ -197,6 +197,7 @@
 			})
 		
 	</script>
+	<script type="text/javascript" src="script/heartbeat.js"></script>
 </head>
 <body class="easyui-layout" style="overflow-y: hidden" fit="true"
 	scroll="no">
@@ -232,9 +233,9 @@
 							class="easyui-linkbutton"
 							data-options="plain:true,iconCls:'icon-search'">退出</a></li>
 					</ul></li>
-				<li id="Hui-msg"><a
-					href="javascript:ckId_not_menu_click('消息查看','${path}/sys/message/doStatusList.do?filter[status]=1');"
-					title="消息"><span class="badge badge-danger">1</span><i
+				<li id="Hui-msg"><a data-href='${path}/sys/message/doStatusList.do?filter[status]=1' data-title='我的站内信'
+					href="javascript:void(0);"  onclick="Hui_admin_tab(this)"
+					title="消息"><span class="badge badge-danger msgCount">0</span><i
 						class="Hui-iconfont" style="font-size:18px">&#xe68a;</i></a></li>
 				<li id="Hui-skin" class="dropDown right dropDown_hover"><a
 					href="javascript:;" class="dropDown_A" title="换肤"><i

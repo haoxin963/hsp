@@ -4,8 +4,7 @@ doList(basePath + "/doStatusList.json");
 
 
 function view(actionURL,id){
-	$("#sign_"+id).html("已读");
-	showDialog("消息查看", actionURL,'','','view');
+	showDialog("消息查看", actionURL,'','','view','');
 } 
 
 

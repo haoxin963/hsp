@@ -2,6 +2,7 @@ package net.hsp.web.sys.msg;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -154,6 +155,7 @@ public class MsgController {
 	public ModelAndView doStatusList(Message message, FilterMap filter, PageInfo pageInfo, HttpServletRequest request) {
 		try {
 			String currentUserId = request.getSession().getAttribute(PlatFormConstant.CURRENT_USERID).toString(); 
+			Map map = messageService.query(currentUserId, filter.getFilter(), pageInfo);
 			return new MV(statusListURL, WebConstant.COMMAND, messageService.query(currentUserId, filter.getFilter(), pageInfo)).fwd();
 		} catch (Exception e) {
 			return new MV().processException(e, null);

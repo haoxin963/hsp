@@ -7,7 +7,7 @@ function heartbeatBack(r){
 			$(".msgCount").html(r.msg);
 			$(".msgCount").fadeIn();
 		} 
-		$("#userOnline").html(r.online);
+		//$("#userOnline").html(r.online);
 	}catch(e){
 	}
 };
@@ -25,7 +25,7 @@ function heartbeatFun(){
 
 function heartbeat(){
 	heartbeatFun();
-	setTimeout(heartbeat, 120000);//2分钟一次
+	setTimeout(heartbeat, 60000);//1分钟一次
 };
  
 $(document).ready(function(){

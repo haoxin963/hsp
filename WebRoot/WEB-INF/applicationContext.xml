@@ -82,6 +82,15 @@
 	</aop:config>
 
 	<import resource="classpath:com/hsp/web/dsContext.xml" />
+	
+	<bean id="cacheManagerFactory" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">  
+        <property name="configLocation"  value="classpath:com/hsp/web/ehcache.xml"/> 
+	</bean>  
+    <cache:annotation-driven cache-manager="cacheManager" /> 
+    
+    <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">  
+        <property name="cacheManager"  ref="cacheManagerFactory"/>  
+    </bean>
 </beans> 
     	 
 

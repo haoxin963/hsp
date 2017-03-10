@@ -22,7 +22,7 @@ function doLoad(action, id) {
 		}
 		showDialog("编辑", url,'','','view');
 	}else{
-		url +="&t="+new Date().getTime();
+		url +="?t="+new Date().getTime();
 		showDialog("新建", url,'','','view');
 	}
 	
